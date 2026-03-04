@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반려동물 모니터링 - 로그인</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/theme.js"></script>
+</head>
+<body class="login-page">
+    <button type="button" class="btn btn-theme theme-fab" id="themeToggle" title="테마 전환">🌙</button>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <span class="logo-icon">🐾</span>
+                <h1>반려동물 모니터링</h1>
+                <p>시스템에 로그인하세요</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">아이디</label>
+                    <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required autocomplete="current-password">
+                </div>
+                <div id="loginError" class="error-message" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary btn-block">로그인</button>
+            </form>
+            <p class="login-hint">데모: 아이디 <strong>admin</strong> / 비밀번호 <strong>1234</strong></p>
+        </div>
+    </div>
+    <script src="js/auth.js"></script>
+    <script>
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const next = theme.toggle();
+            this.textContent = next === theme.DARK ? '🌙' : '☀️';
+        });
+        document.getElementById('themeToggle').textContent = theme.get() === theme.DARK ? '🌙' : '☀️';
+    </script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorEl = document.getElementById('loginError');
+
+            if (auth.login(username, password)) {
+                window.location.href = 'dashboard.html';
+            } else {
+                errorEl.textContent = '아이디 또는 비밀번호가 올바르지 않습니다.';
+                errorEl.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
